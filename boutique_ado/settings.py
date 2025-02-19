@@ -84,6 +84,21 @@ AUTHENTICATION_BACKENDS = [
 
 SITE_ID = 1 #create the callback url when connecting social media account
 
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' 
+# log the email in the console temporary for getting the confirmation link
+
+ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
+# tells allauth that customer can use username or email 
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+ACCOUNT_SIGNUP_EMAIL_ENTER_TWICE = True
+#above settings for mail required for the sign, verification of real email is required
+# and email should be entered twice for avoid mistake
+ACCOUNT_USERNAME_MIN_LENGTH = 4
+# username should be >4 characters
+LOGIN_URL = '/accounts/login/'
+LOGIN_REDIRECT_URL = '/' #redirect after login
+
 
 WSGI_APPLICATION = 'boutique_ado.wsgi.application'
 
