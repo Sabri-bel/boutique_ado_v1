@@ -36,7 +36,7 @@
   </head>
   <body>
     <header class="container-fluid fixed-top">
-        <div class="row">
+        <div id="topnav" class="row bg-white pt-lg-2 d-none d-lg-flex">
             <div class="col-12 col-lg-4 my-auto py-1 py-lg-0 text-cente text-lg-left">
                 <a href="{% url 'home' %}" class="nav-link main-logo-link">
                     <h2 class="logo-font text-black my-0"><strong>Boutique</strong> Ado</h2>
@@ -69,10 +69,10 @@
                                     <a href="" class="dropdown-item">Product Management</a>
                                 {% endif %}
                                 <a href="" class="dropdown-item">My Profile</a>
-                                <a href="{% url account_logout %}" class="dropdown-item">Logout</a>
+                                <a href="{% url 'account_logout' %}" class="dropdown-item">Logout</a>
                             {% else %}
-                                <a href="{% url account_signup %}" class="dropdown-item">Register</a>
-                                <a href="{% url account_login %}" class="dropdown-item">Login</a>
+                                <a href="{% url 'account_signup' %}" class="dropdown-item">Register</a>
+                                <a href="{% url 'account_login' %}" class="dropdown-item">Login</a>
                             {% endif %}
                         </div>
                     </li>
