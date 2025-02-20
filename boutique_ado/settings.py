@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account', # allow the basic stuff like login and logout etc
     'allauth.socialaccount', # login using social media providers
+    'home',
 ]
 
 MIDDLEWARE = [
@@ -59,7 +60,10 @@ ROOT_URLCONF = 'boutique_ado.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            os.path.join(BASE_DIR, 'templates'), #index page
+            os.path.join(BASE_DIR, 'templates', 'allauth'), #base and allauth pages
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
