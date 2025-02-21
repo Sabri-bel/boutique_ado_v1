@@ -38,10 +38,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django.contrib.sites', # create the callback url when connecting social media account
+    'django.contrib.sites',  # create the callback url when connecting social media account
     'allauth',
-    'allauth.account', # allow the basic stuff like login and logout etc
-    'allauth.socialaccount', # login using social media providers
+    'allauth.account',  # allow the basic stuff like login and logout etc
+    'allauth.socialaccount',  # login using social media providers
     'home',
 ]
 
@@ -61,14 +61,14 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            os.path.join(BASE_DIR, 'templates'), #index page
-            os.path.join(BASE_DIR, 'templates', 'allauth'), #base and allauth pages
+            os.path.join(BASE_DIR, 'templates'),  # index page
+            os.path.join(BASE_DIR, 'templates', 'allauth'),  # base and allauth pages
         ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
-                'django.template.context_processors.request',  # allauth require this for the request http 
+                'django.template.context_processors.request',  # allauth require this for the request http
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
@@ -86,22 +86,22 @@ AUTHENTICATION_BACKENDS = [
     'allauth.account.auth_backends.AuthenticationBackend',
 ]
 
-SITE_ID = 1 #create the callback url when connecting social media account
+SITE_ID = 1  # create the callback url when connecting social media account
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' 
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 # log the email in the console temporary for getting the confirmation link
 
 ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
-# tells allauth that customer can use username or email 
+# tells allauth that customer can use username or email
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 ACCOUNT_SIGNUP_EMAIL_ENTER_TWICE = True
-#above settings for mail required for the sign, verification of real email is required
+# above settings for mail required for the sign, verification of real email is required
 # and email should be entered twice for avoid mistake
 ACCOUNT_USERNAME_MIN_LENGTH = 4
 # username should be >4 characters
 LOGIN_URL = '/accounts/login/'
-LOGIN_REDIRECT_URL = '/' #redirect after login
+LOGIN_REDIRECT_URL = '/'  # redirect after login
 
 
 WSGI_APPLICATION = 'boutique_ado.wsgi.application'
@@ -155,6 +155,13 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIR = (os.path.join(BASE_DIR, 'static'),)  # os.path.join since it is located in the project static folder 
+# line above links the static and media files. it will say to djanho where the
+# statics are located. this is a tuple
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
