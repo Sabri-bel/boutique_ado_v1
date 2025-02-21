@@ -155,7 +155,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
-STATICFILES_DIR = (os.path.join(BASE_DIR, 'static'),)  # os.path.join since it is located in the project static folder 
+STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)  # os.path.join since it is located in the project static folder 
 # line above links the static and media files. it will say to djanho where the
 # statics are located. this is a tuple
 
