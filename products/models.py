@@ -5,7 +5,7 @@ from django.db import models
 
 class Category(models.Model):
 
-    class Meta: 
+    class Meta:
         # fix the plural issue in the django admin for category
         verbose_name_plural = 'Categories'
 
