@@ -114,6 +114,12 @@
 
     </div>
 </div>
+<!--back to top button-->
+<div class="btt-button shadow-sm rounded-0 border border-black">
+    <a class="btt-link d-flex h-100">
+        <i class="fas fa-arrow-up text-black mx-auto my-auto"></i>
+    </a>	
+</div>
 
 {% endblock %}
 
@@ -124,6 +130,14 @@
 {% block postloadjs %}
     {{ block.super }} 
 <script type="text/javascript">
+    //function for the back to top button functionality
+    $(',btt-link').click(function(e) {
+        window.scrollTo(0,0)
+    })
+</script>
+
+<script type="text/javascript">
+    //fucntion for the sorting fucntionality
     $('#sort-selector').change(function() {
         //1.capture the change event from the source selector itself = created a variable equal to "this"
         var selector = $(this);
