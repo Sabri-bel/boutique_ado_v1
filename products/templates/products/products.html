@@ -116,3 +116,46 @@
 </div>
 
 {% endblock %}
+
+<!--using jquery for the sort box functionality
+- postloadjs -> refer to the base template
+- block.super -> ensure we will append this code to anything already in the block  instead of replacing it-->
+
+{% block postloadjs %}
+    {{ block.super }} 
+<script type="text/javascript">
+    $('#sort-selector').change(function() {
+        //1.capture the change event from the source selector itself = created a variable equal to "this"
+        var selector = $(this);
+        //2. capture the current url a a new url object (current windows location)
+        // this is required to replace the GET parameters required to update the sorting methodology
+        var currentUrl = new URL(window.location);
+
+        //3. get the selected value from the selector box (value attribute from the selected option element in the selector box)
+        var selectedVal = selector.val();
+        //4. create an if statement to determine if the selected value is "reset"
+        if(selectedVal != "reset"){
+            // option 1- value not "reset"
+            //sect the item we are stortin on and apply the split method
+            var sort = selectedVal.split("_")[0];
+            //sect the direction (asc or desc) we are stortin on and apply the split method
+            var direction = selectedVal.split("_")[1];
+
+            //replace the parameters in the URL
+            currentUrl.searchParams.set("sort", sort);
+            currentUrl.searchParams.set("direction", direction);
+
+            //replace the current location with the new URL constructed (page reload)
+            window.location.replace(currentUrl);
+        } else {
+            //option 2- value equal to reset
+            //delete sort and direction and replace the location
+            currentUrl.searchParams.delete("sort");
+            currentUrl.searchParams.delete("direction");
+            
+            window.location.replace(currentUrl);
+        }
+    })
+</script>
+
+{% endblock %}
