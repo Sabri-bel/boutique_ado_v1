@@ -1,0 +1,55 @@
+<script type="text/javascript">
+    
+    //enable and disable the button based on the value
+    function handleEnableDisable(itemId) {
+        //1. get the current value
+        var currentValue = parseInt($(`#id_qty_${itemId}`).val());
+        //2. set the minus/maximum range
+        var minusDisabled = currentValue < 2;
+        var plusDisabled = currentValue > 98;
+        //3. disable button if the value is outside the range
+        $(`#decrement-qty_${itemId}`).prop('disabled', minusDisabled);
+        $(`#increment-qty_${itemId}`).prop('disabled', plusDisabled);
+    }
+
+    //ensure proper enabling/disabling of all imputs on page load
+    var allQtyInputs = $('.qty_input');
+    for(var i = 0; i < allQtyInputs.length; i++){
+        var itemId = $(allQtyInputs[i]).data('item_id')
+        handleEnableDisable(itemId);
+    }
+
+    //check enabling disabling every time the input is changed
+    $('.qty_input').change(function() {
+        var itemId = $(this).data('item_id');
+        handleEnableDisable(itemId)
+    })
+
+    // increment quantity 
+    $('.increment-qty').click(function(e) {
+        //1. prevent the default action of the button
+        e.preventDefault();
+        //2. find the closest input box (closest goes up to the DOM and 
+        // find goes down to the DOM)
+        var closestInput = $(this).closest('.input-group').find('.qty_input')[0];
+        //3. chaches that value in a variable called current value
+        var currentValue = parseInt($(closestInput).val());
+        //4. set the new value modified
+        $(closestInput).val(currentValue + 1);
+        var itemId = $(this).data('item_id');
+        //5. apply the function above for disable button if needed
+        handleEnableDisable(itemId)
+    });
+
+    // decrement quantity (same process as above)
+    $('.decrement-qty').click(function(e) {
+        e.preventDefault();
+        var closestInput = $(this).closest('.input-group').find('.qty_input')[0];
+        var currentValue = parseInt($(closestInput).val());
+        $(closestInput).val(currentValue - 1);
+        var itemId = $(this).data('item_id');
+        //5. apply the function above for disable button if needed
+        handleEnableDisable(itemId)
+    });
+
+</script>
