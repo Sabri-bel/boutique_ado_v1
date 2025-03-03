@@ -17,6 +17,7 @@ def bag_contents(request):
 
     # iterate through all the items in the shopping bag:
     for item_id, item_data in bag.items():
+
         if isinstance(item_data, int):
             # if item_data has no size (so it is an integer and not a dictionary):
             product = get_object_or_404(Product, pk=item_id)
@@ -30,7 +31,7 @@ def bag_contents(request):
                 })
         else:
             # if the item_data has quantity+size it is a dictionary:
-            product = get_object_or_404(product, pk=item_id)
+            product = get_object_or_404(Product, pk=item_id)
             
             # we need to iterate through the inner dictionary items_by_size
             for size, quantity in item_data['items_by_size'].items():
@@ -38,11 +39,11 @@ def bag_contents(request):
                 total += quantity * product.price
                 product_count += quantity
                 bag_items.append({
-                'item_id': item_id,
-                'quantity': item_data,
-                'product': product,
-                'size': size
-                })
+                                'item_id': item_id,
+                                'quantity': item_data,
+                                'product': product,
+                                'size': size
+                                })
 
     if total < settings.FREE_DELIVERY_THRESHOLD:
         delivery = total * Decimal(settings.STANDARD_DELIVERY_PERCENTAGE / 100)

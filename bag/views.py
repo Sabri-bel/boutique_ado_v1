@@ -30,11 +30,11 @@ def add_to_bag(request, item_id):
     if size:
         if item_id in list(bag.keys()):
             # if an item is already in the bag, it will update the quantity if the size is the same:
-            if size in bag[item_id]['items_by_size'].key:
-                bag[item_id]['item_by_size'][size] += quantity
+            if size in bag[item_id]['items_by_size'].keys():
+                bag[item_id]['items_by_size'][size] += quantity
             # if the item already exist but with a different size, it will be added as is:
             else:
-                bag[item_id]['item_by_size'][size] = quantity
+                bag[item_id]['items_by_size'][size] = quantity
         else:
             # if items not in the bag, it will add it using the ID and the size as dictionary
             bag[item_id] = {'items_by_size':{size: quantity}}
