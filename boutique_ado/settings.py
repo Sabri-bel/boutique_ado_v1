@@ -139,6 +139,9 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# this is required for store message in session. not always required 
+MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
