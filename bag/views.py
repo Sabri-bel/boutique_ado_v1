@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect, reverse, HttpResponse
+from django.shortcuts import render, redirect, reverse, HttpResponse, get_object_or_404
 from django.contrib import messages
 from products.models import Product
 
@@ -15,7 +15,7 @@ def add_to_bag(request, item_id):
     add a quantity of the specified item in the shopping bag
     """
     # the single line code below is for message toast:
-    product = Product.objects.get(pk=item_id)
+    product = get_object_or_404(Product, pk=item_id)
     # 1. get a quantity from the form and convert as integer
     quantity = int(request.POST.get('quantity'))
     # 2. get the redirect URL from the form used after the process is finished
@@ -36,17 +36,25 @@ def add_to_bag(request, item_id):
             # if an item is already in the bag, it will update the quantity if the size is the same:
             if size in bag[item_id]['items_by_size'].keys():
                 bag[item_id]['items_by_size'][size] += quantity
+                messages.success(request, f"Updated size {size.upper()} {product.name} quantity to {bag[item_id]['items_by_size'][size]}")
+
             # if the item already exist but with a different size, it will be added as is:
             else:
                 bag[item_id]['items_by_size'][size] = quantity
+                messages.success(request, f"Added size {size.upper()} {product.name} to {bag[item_id]}")
+
         else:
             # if items not in the bag, it will add it using the ID and the size as dictionary
             bag[item_id] = {'items_by_size': {size: quantity}}
+            messages.success(request, f"Added size {size.upper()} {product.name} to {bag[item_id]}")
+
 
     else:
         if item_id in list(bag.keys()):
             # if bag variable already exist in the session it will be updated
             bag[item_id] += quantity
+            messages.success(request, f"updated {product.name} quantity to {bag[item_id]}")
+
         else: 
             # if the bag variable is not present in the session it will be created
             bag[item_id] = quantity
@@ -62,6 +70,7 @@ def adjust_bag(request, item_id):
     """
     adjust the quantity of the specified item in the shopping bag
     """
+    product = get_object_or_404(Product, pk=item_id)
     # 1. get a quantity from the form and convert as integer
     quantity = int(request.POST.get('quantity'))
     # 2. store the information in a session (customer can continue to browse the site and it 
@@ -78,18 +87,26 @@ def adjust_bag(request, item_id):
     if size:
         if quantity > 0:
             bag[item_id]['items_by_size'][size] = quantity
+            messages.success(request, f"Updated size {size.upper()} {product.name} quantity to {bag[item_id]}")
+
         else:
             del bag[item_id]['items_by_size'][size]
             if not bag[item_id]['items_by_size']:
                 bag.pop(item_id)
+            messages.success(request, f"Removed size {size.upper()} {product.name} from your bag")
+
 
     else:
         if quantity > 0:
             # if bag variable already exist in the session it will be updated
             bag[item_id] = quantity
+            messages.success(request, f"Updated {product.name} quantity to {bag[item_id]}")
+
         else: 
             # if the bag variable is not present in the session it will be created
             bag.pop(item_id)
+            messages.success(request, f"Removed {product.name} from your bag")
+
 
     # 4. overwrite the information in the session (python dictionary)
     request.session['bag'] = bag
@@ -102,6 +119,8 @@ def remove_from_bag(request, item_id):
     remove the specified item in the shopping bag
     """
     try:
+            
+        product = get_object_or_404(Product, pk=item_id)
         size = None
 
         # is the product has size, it will be set with this code:
@@ -113,12 +132,17 @@ def remove_from_bag(request, item_id):
             del bag[item_id]['items_by_size'][size]
             if not bag[item_id]['items_by_size']:
                 bag.pop(item_id)
+            messages.success(request, f"removed size {size.upper()} {product.name} from your bag")
+
 
         else:
             bag.pop(item_id)
+            messages.success(request, f"Removed {product.name} from your bag")
+
 
         # 4. overwrite the information in the session (python dictionary)
         request.session['bag'] = bag
         return HttpResponse(status=200)
     except Exception as e:
+        messages.error(request, f"Error removing item: {e}")
         return HttpResponse(status=500)
