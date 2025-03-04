@@ -41,7 +41,8 @@ def add_to_bag(request, item_id):
                 bag[item_id]['items_by_size'][size] = quantity
         else:
             # if items not in the bag, it will add it using the ID and the size as dictionary
-            bag[item_id] = {'items_by_size':{size: quantity}}
+            bag[item_id] = {'items_by_size': {size: quantity}}
+
     else:
         if item_id in list(bag.keys()):
             # if bag variable already exist in the session it will be updated
