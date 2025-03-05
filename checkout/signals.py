@@ -19,7 +19,7 @@ def update_on_save(sender, instance, created, **kwargs):
 @receiver(post_delete, sender=OrderLineItem)
 # the decorator make sure that the funxtion is executed anytime
 # the post-save signal is sent
-def delete_on_save(sender, instance, **kwargs):
+def update_on_save(sender, instance, **kwargs):
     """
     update the order total on lineitem delete
     update total, delivery costs, and grand tital for each order as
