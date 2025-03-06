@@ -189,3 +189,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # below the constant for calculate the shipping rate
 FREE_DELIVERY_THRESHOLD = 50
 STANDARD_DELIVERY_PERCENTAGE = 10
+
+STRIPE_CURRENCY = 'usd'
+

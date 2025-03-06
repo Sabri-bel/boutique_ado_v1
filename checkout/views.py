@@ -1,6 +1,12 @@
 from django.shortcuts import render, redirect, reverse
 from django.contrib import messages
+from django.conf import settings
+import stripe 
+
 from .forms import OrderForm
+
+from bag.contexts import bag_contents
+
 
 # Create your views here.
 
@@ -14,6 +20,10 @@ def checkout(request):
         messages.error(request, 'there is nothing in your bag at the moment')
         return redirect(reverse('products'))
 
+    current_bag = bag_contents(request)
+    total = current_bag['grand_total']
+    stripe_total = round(total * 100) # stripes require an integer
+ 
     # 2. create an instance of the orderform
     order_form = OrderForm()
     # 3. create the template and the context
