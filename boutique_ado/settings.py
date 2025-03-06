@@ -77,6 +77,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',  # allauth require this for the request http
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.media',  # allow to use the default no-image
                 'bag.contexts.bag_contents',  # allow the use of context.py in any template across the entire site. manually created in bag app
             ],
             # contain all the bootstrap tags available in all the templates by default

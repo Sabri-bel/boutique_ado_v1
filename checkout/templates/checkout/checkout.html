@@ -22,12 +22,13 @@
         <div class="row">
             <div class="col">
                 <hr>
-                <h2 class="logo-font mb-4">Shopping Bag</h2>
+                <h2 class="logo-font mb-4">Checkout</h2>
             </div>
         </div>
         <div class="row">
             <!--order summary -->
             <div class="col-12 col-lg-6 order-lg-last mb-5">
+                <p class="text-muted">Order Summary ({{ product_count }})</p>
                 <!--summary header-->
                 <div class="row">
                     <div class="col-7 offset-2">
@@ -103,7 +104,7 @@
                             {% else %}
                                 <label for="id-save-info" class="form-check-label">
                                     <a href="{% url 'account_signup' %}" class="text-info">Create an account</a> or
-                                    <a href="{% url 'account_login %}" class="text-info">Login</a> to save this information
+                                    <a href="{% url 'account_login' %}" class="text-info">Login</a> to save this information
                                 </label>
                             {% endif %}
                         </div>
