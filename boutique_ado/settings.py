@@ -149,7 +149,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-# this is required for store message in session. not always required 
+# this is required for store message in session. not always required
 MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
 
 
@@ -184,6 +184,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# below the constant for calculate the shipping rate 
+# below the constant for calculate the shipping rate
 FREE_DELIVERY_THRESHOLD = 50
 STANDARD_DELIVERY_PERCENTAGE = 10
