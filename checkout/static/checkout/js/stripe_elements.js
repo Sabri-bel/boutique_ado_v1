@@ -29,3 +29,22 @@ var card = elements.create('card', {style:style});
 
 //4. mount the card element to the given div 
 card.mount('#card-element');
+
+
+// handle real time validation errors on the card elements using the
+//eventlistener event on change card
+
+card.addEventListener('change', function(event) {
+    var errorDiv = document.getElementById('card-errors');
+    if (event.error) {
+        var html = `
+        <span class="icon" role="alert">
+            <i class="fas fa-times"></i>
+        </span>
+        <span>${event.error.message}</span>
+        `;
+        $(errorDiv).html(html);
+    } else {
+        errorDiv.textContent = ''
+    }
+});
