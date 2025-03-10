@@ -1,7 +1,7 @@
-from django.shortcuts import render, redirect, reverse
-from django.contrib import messages
-from django.conf import settings
-import stripe 
+from django.shortcuts import render, redirect, reverse  # type: ignore
+from django.contrib import messages  # type: ignore
+from django.conf import settings  # type: ignore
+import stripe  # type: ignore
 
 from .forms import OrderForm
 
@@ -29,14 +29,14 @@ def checkout(request):
     total = current_bag['grand_total']
 
     stripe_total = round(total * 100)  # stripes require an integer
-    
+
     stripe.api_key = stripe_secret_key
+
+    # create the payment intent giving the amount and the currency:
     intent = stripe.PaymentIntent.create(
         amount=stripe_total,
         currency=settings.STRIPE_CURRENCY,
     )
-
-    print(intent)
 
     # 2. create an instance of the orderform
     order_form = OrderForm()
@@ -44,7 +44,7 @@ def checkout(request):
     if not stripe_public_key:
         messages.warning(request, 'Stripe public key is missing, \
         did you forget to set it in your environment?')
-        
+
     # 3. create the template and the context
     template = 'checkout/checkout.html'
     context = {

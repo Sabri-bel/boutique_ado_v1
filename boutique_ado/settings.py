@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django.contrib.sites',  # create the callback url when connecting social media account
+    'django.contrib.sites',  # create the callback url when connecting social
     'allauth',
     'allauth.account',  # allow the basic stuff like login and logout etc
     'allauth.socialaccount',  # login using social media providers
@@ -195,4 +195,3 @@ STRIPE_CURRENCY = 'usd'
 # value stored in env.py file
 STRIPE_PUBLIC_KEY = os.getenv('STRIPE_PUBLIC_KEY', '')
 STRIPE_SECRET_KEY = os.getenv('STRIPE_SECRET_KEY', '')
-
