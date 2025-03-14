@@ -60,6 +60,8 @@ form.addEventListener('submit', function(ev) {
     // disable submit button and card element to prevent multiple submission during checkout
     card.update({ 'disabled': true});
     $('#submit-button').attr('disabled', true);
+    $('#payment-form').fadeToggle(100);
+    $('#loading-overlay').fadeToggle(100);
 
     // 2. send the info securely on stripe
     stripe.confirmCardPayment(clientSecret, {
@@ -76,6 +78,9 @@ form.addEventListener('submit', function(ev) {
                 </span>
                 <span>${result.error.message}</span>`;
             $(errorDiv).html(html);
+            
+            $('#payment-form').fadeToggle(100);
+            $('#loading-overlay').fadeToggle(100);
 
             // re-enable the card and submit button for a correction
             card.update({ 'disabled': false});
