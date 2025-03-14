@@ -1,7 +1,7 @@
 import uuid  # generate the order number
-from django.db import models
-from django.db.models import Sum
-from django.conf import settings
+from django.db import models  # type: ignore
+from django.db.models import Sum  # type: ignore
+from django.conf import settings  # type: ignore
 from products.models import Product
 # required since there is a foreign key in item order model
 
@@ -29,9 +29,21 @@ class Order(models.Model):
     street_address2 = models.CharField(max_length=80, null=True, blank=True)
     county = models.CharField(max_length=80, null=True, blank=True)
     date = models.DateTimeField(auto_now_add=True)
-    delivery_cost = models.DecimalField(max_digits=6, decimal_places=2, null=False, default=0)
-    order_total = models.DecimalField(max_digits=10, decimal_places=2, null=False, default=0)
-    grand_total = models.DecimalField(max_digits=10, decimal_places=2, null=False, default=0)
+    delivery_cost = models.DecimalField(max_digits=6,
+                                        decimal_places=2,
+                                        null=False,
+                                        default=0
+                                        )
+    order_total = models.DecimalField(max_digits=10,
+                                      decimal_places=2,
+                                      null=False,
+                                      default=0
+                                      )
+    grand_total = models.DecimalField(max_digits=10,
+                                      decimal_places=2,
+                                      null=False,
+                                      default=0
+                                      )
 
     def _generate_order_number(self):
         """
@@ -41,7 +53,7 @@ class Order(models.Model):
         this generate a string of 32 characters used as order number
         """
         return uuid.uuid4().hex.upper()
-    
+
     def update_total(self):
         """
         update grand total each time a line item is added
@@ -79,16 +91,35 @@ class OrderLineItem(models.Model):
     for that item the first foreign key refer to the order model above,
     the second one refer to the product model
     """
-    order = models.ForeignKey(Order, null=False, blank=False, on_delete=models.CASCADE, related_name='lineitems')
-    product = models.ForeignKey(Product, null=False, blank=False, on_delete=models.CASCADE)
-    product_size = models.CharField(max_length=2, null=True, blank=True)
-    quantity = models.IntegerField(null=False, blank=False, default=0)
-    lineitem_total = models.DecimalField(max_digits=6, decimal_places=2, null=False, blank=False, editable=False)
+    order = models.ForeignKey(Order,
+                              null=False,
+                              blank=False,
+                              on_delete=models.CASCADE,
+                              related_name='lineitems'
+                              )
+    product = models.ForeignKey(Product,
+                                null=False,
+                                blank=False,
+                                on_delete=models.CASCADE
+                                )
+    product_size = models.CharField(max_length=2,
+                                    null=True,
+                                    blank=True
+                                    )
+    quantity = models.IntegerField(null=False,
+                                   blank=False,
+                                   default=0)
+    lineitem_total = models.DecimalField(max_digits=6,
+                                         decimal_places=2,
+                                         null=False,
+                                         blank=False,
+                                         editable=False
+                                         )
     # lineitem_total is not editable because it is automatically calculated
 
     def save(self, *args, **kwargs):
         """
-        override the original save method to set the line item total 
+        override the original save method to set the line item total
         and update the order total
         *args is used for collect arbitrary positional arguments as tuple,
         **kwargs as dictionary

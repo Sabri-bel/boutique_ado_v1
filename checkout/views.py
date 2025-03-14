@@ -35,7 +35,7 @@ def checkout(request):
             'county': request.POST['county'],
         }
         order_form = OrderForm(form_data)
-        # if the form is valid we can save the form and iterate through each item
+        # if the form is valid we can save the form and iterate each item
         if order_form.is_valid():
             order = order_form.save()
             for item_id, item_data in bag.items():
@@ -52,7 +52,8 @@ def checkout(request):
                         # save
                         order_line_item.save()
                     else:
-                        # for product with sizes (dictionary) iterate through each size and create a line accordingly:
+                        # for product with sizes (dictionary) iterate each
+                        # size and create a line accordingly:
                         for size, quantity in item_data['items_by_size'].items():
                             order_line_item = OrderLineItem(
                                 order=order,
@@ -65,7 +66,7 @@ def checkout(request):
                 except Product.DoesNotExist:
                     # 2. handle an error if the product is not existing:
                     messages.error(request, (
-                        "One of the products in your bag wasn't found in our database. "
+                        "One of the products in your bag wasn't found in database."
                         "Please call us for assistance!")
                     )
                     # delete the order and come back at the shopping bag page
