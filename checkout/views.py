@@ -15,20 +15,20 @@ from bag.contexts import bag_contents
 
 @require_POST
 def cache_checkout_data(request):
-    # this is created to check if the user saved the info using the 
-    # box check and add it to the payment intent in a key called 
+    # this is created to check if the user saved the info using the
+    # box check and add it to the payment intent in a key called
     # metadata. this is server-side.
     """
-    before we call the confirmation for the card payment method we will make 
-    a post request to this view and give it the client secret from the 
+    before we call the confirmation for the card payment method we will make
+    a post request to this view and give it the client secret from the
     payment intent
     """
     try:
         # 1. get the payment intent id using split method andstore it in pid
         pid = request.POST.get('client_secret').split('_secret')[0]
         # 2. use the secret key for modify the payment intent, adding the pid
-        # and some metadata (user who place the order, whether or not he choose to
-        # save the data, and the json dump of shopping bag)
+        # and some metadata (user who place the order, whether or not he choose
+        # to save the data, and the json dump of shopping bag)
         stripe.api_key = settings.STRIPE_SECRET_KEY
         stripe.PaymentIntent.modify(pid, metadata={
             'bag': json.dumps(request.session.get('bag', {})),
@@ -37,7 +37,7 @@ def cache_checkout_data(request):
         })
         return HttpResponse(status=200)
     except Exception as e:
-        messages.error(request, 'sorry, your payment cannot be processed right now')
+        messages.error(request, 'sorry, your payment cannot be processed now')
         return HttpResponse(content=e, status=400)
 
 

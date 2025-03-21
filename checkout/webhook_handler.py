@@ -1,7 +1,7 @@
 from django.http import HttpResponse  # type: ignore
 
 
-class StripeWH_handler:
+class StripeWH_Handler:
     """
     handle stripe webhook
     this is a notification for each operation of stripe (such as payment
@@ -29,6 +29,8 @@ class StripeWH_handler:
         handle payment intent success webhook event
         it will take the event of stripe and return an http response
         """
+        intent = event.data.object
+        print(intent)
         return HttpResponse(
             content=f"Webhook received: {event['type']}",
             status=200)
